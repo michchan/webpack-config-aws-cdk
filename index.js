@@ -55,7 +55,11 @@ const mapEntry = handlersPath => {
  *    /bundles/cron/handlers
  *    /bundles/api/handlers
  */
-const createConfig = handlersPath => ({
+const createConfig = (
+  handlersPath,
+  srcDirname,
+  srcDirnameAlias = 'src',
+) => ({
   mode: 'development',
   target: 'node',
   entry: mapEntry(handlersPath),
@@ -77,7 +81,7 @@ const createConfig = handlersPath => ({
   },
   resolve: {
     alias: {
-      src: path.resolve(__dirname, 'build'),
+      [srcDirnameAlias]: path.resolve(srcDirname, 'build'),
     },
   },
   externals: {
