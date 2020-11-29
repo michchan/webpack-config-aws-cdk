@@ -7,7 +7,7 @@ const DEFAULT_ANALYZER_PORT = 8888
 const createBundleAnalyzerPlugin = (
   reportTitle,
   analyzerPort = DEFAULT_ANALYZER_PORT,
-  reportFilename = 'bundler_report.html' 
+  reportFilename = 'bundler_report.html'
 ) => new BundleAnalyzerPlugin({
   // Avoid CI crash issue
   analyzerMode: 'static',
@@ -55,7 +55,7 @@ const mapEntry = handlersPath => {
  *    /bundles/cron/handlers
  *    /bundles/api/handlers
  */
-const createConfig = (handlersPath, name, index) => ({
+const createConfig = handlersPath => ({
   mode: 'development',
   target: 'node',
   entry: mapEntry(handlersPath),

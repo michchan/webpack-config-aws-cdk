@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/michchan/webpack-config-aws-cdk#readme",
   "devDependencies": {
-    "@michchan/eslint-config": "1.6.0",
+    "@michchan/eslint-config": "1.6.1",
     "eslint": "7.x",
     "webpack-bundle-analyzer": "^4.1.0"
   }
