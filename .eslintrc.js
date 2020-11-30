@@ -1,4 +1,4 @@
 /* eslint-disable quote-props */
 module.exports = {
-  'extends': '@michchan/eslint-config',
+  'extends': '@michchan/eslint-config/node-ts',
 }

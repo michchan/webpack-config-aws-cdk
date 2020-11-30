@@ -4,8 +4,11 @@
   "description": "My shared webpack config for aws-cdk lambda bundling",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "eslint": "eslint",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "tsc": "tsc",
+    "watch": "tsc --watch --noemit"
   },
   "repository": {
     "type": "git",
@@ -26,7 +29,12 @@
   "homepage": "https://github.com/michchan/webpack-config-aws-cdk#readme",
   "devDependencies": {
     "@michchan/eslint-config": "1.6.1",
+    "@types/node": "^14.14.10",
+    "@types/webpack": "^4.41.25",
+    "@types/webpack-bundle-analyzer": "^3.9.0",
     "eslint": "7.x",
+    "typescript": "^4.1.2",
+    "webpack": "^5.9.0",
     "webpack-bundle-analyzer": "^4.1.0"
   }
 }

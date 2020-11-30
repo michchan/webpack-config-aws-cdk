@@ -40,6 +40,10 @@ jobs:
       - name: Run test
         run: npm run test
 
+      # Run build
+      - name: Run build
+        run: npm run build
+
       # Publish to NPM
       - run: npm publish --access public
         env:

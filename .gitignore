@@ -1,3 +1,8 @@
 node_modules
 package-lock.json
 yarn.lock
+
+# Typescript build
+*.d.ts
+*.js
+index.js

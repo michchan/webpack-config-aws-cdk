@@ -1,14 +1,15 @@
-const fs = require('fs')
-const path = require('path')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+import fs = require('fs')
+import path = require('path')
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import { Configuration, ModuleOptions } from 'webpack'
 
 const DEFAULT_ANALYZER_PORT = 8888
 
-const createBundleAnalyzerPlugin = (
-  reportTitle,
-  analyzerPort = DEFAULT_ANALYZER_PORT,
-  reportFilename = 'bundler_report.html'
-) => new BundleAnalyzerPlugin({
+export const createBundleAnalyzerPlugin = (
+  reportTitle: string,
+  analyzerPort: number = DEFAULT_ANALYZER_PORT,
+  reportFilename: string = 'bundler_report.html'
+): BundleAnalyzerPlugin => new BundleAnalyzerPlugin({
   // Avoid CI crash issue
   analyzerMode: 'static',
   openAnalyzer: false,
@@ -17,7 +18,7 @@ const createBundleAnalyzerPlugin = (
   analyzerPort,
 })
 
-const mapEntry = handlersPath => {
+const mapEntry = (handlersPath: string): Configuration['entry'] => {
   const dirs = fs.readdirSync(handlersPath)
   // Get names of js files
   const names = dirs.filter(dir => {
@@ -30,7 +31,7 @@ const mapEntry = handlersPath => {
     return /\.js$/.test(dir)
   })
   // Map entry object
-  return names.reduce((obj, name) => {
+  return names.reduce((obj: { [key: string]: string }, name) => {
     // Remove .js file extension
     const key = name.replace(/\.js$/, '')
     // Append 'index.js' if it is a directory
@@ -55,11 +56,11 @@ const mapEntry = handlersPath => {
  *    /bundles/cron/handlers
  *    /bundles/api/handlers
  */
-const createConfig = (
-  handlersPath,
-  srcDirname,
-  srcDirnameAlias = 'src',
-) => ({
+export const createConfig = (
+  handlersPath: string,
+  srcDirname: string,
+  srcDirnameAlias: string = 'src',
+): Configuration => ({
   mode: 'development',
   target: 'node',
   entry: mapEntry(handlersPath),
@@ -90,7 +91,16 @@ const createConfig = (
   },
 })
 
-module.exports = {
-  createConfig,
-  createBundleAnalyzerPlugin,
-}
+export const chromeAWSLambdaRules: ModuleOptions['rules'] = [
+  /**
+   * Use file loader to move chromnium .br files into /bin~
+   * @link https://github.com/alixaxel/chrome-aws-lambda/issues/80
+   *
+   * This is for correctly bundling the chromnium instance required by 'chrome-aws-lambda',
+   * from the helper 'launchPuppeteerBrowserSession' of 'simply-utils'.
+   */
+  {
+    test: /chrome\-aws\-lambda\/bin\/(.+)\.br$/,
+    use: [{ loader: 'file-loader', options: { name: '/node_modules/chrome-aws-lambda/bin/[name].[ext]' } }],
+  },
+]
