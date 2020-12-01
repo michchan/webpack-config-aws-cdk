@@ -1,7 +1,7 @@
 import fs = require('fs')
 import path = require('path')
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
-import { Configuration, ModuleOptions } from 'webpack'
+import { Configuration, RuleSetRule } from 'webpack'
 
 const DEFAULT_ANALYZER_PORT = 8888
 
@@ -91,7 +91,7 @@ export const createConfig = (
   },
 })
 
-export const chromeAWSLambdaRules: ModuleOptions['rules'] = [
+export const chromeAWSLambdaRules: RuleSetRule[] = [
   /**
    * Use file loader to move chromnium .br files into /bin~
    * @link https://github.com/alixaxel/chrome-aws-lambda/issues/80
