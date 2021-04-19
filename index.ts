@@ -56,13 +56,20 @@ const mapEntry = (handlersPath: string): Configuration['entry'] => {
  *    /bundles/cron/handlers
  *    /bundles/api/handlers
  *
- * @param handlersPath
+ * @param inputPath
+ *  The input pathname (relative to project root) containing lambda handlers source code
  * @param outputPath
+ *  The output pathname (relative to project root)
  * @param srcDirname
+ *  The dirname of the project (usually __dirname)
+ * @param srcAliasOutput
+ *  The output alias that is mapped from srcAlias.
+ *  e.g. Defining "build" will replace all import paths with srcAlias with "build"
  * @param srcAlias
+ *  The alias to replace as srcAliasOutput. Default to "src".
  */
 export const createConfig = (
-  handlersPath: string,
+  inputPath: string,
   outputPath: string,
   srcDirname: string,
   srcAliasOutput: string,
@@ -71,7 +78,7 @@ export const createConfig = (
 ): Configuration => ({
   mode: 'development',
   target: 'node',
-  entry: mapEntry(handlersPath),
+  entry: mapEntry(inputPath),
   output: {
     path: path.join(process.cwd(), outputPath),
     // Keep the bundle name same as the orignal function name
