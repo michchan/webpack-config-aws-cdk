@@ -1,6 +1,6 @@
 {
   "name": "@michchan/webpack-config-aws-cdk",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "My shared webpack config for aws-cdk lambda bundling",
   "main": "index.js",
   "scripts": {
