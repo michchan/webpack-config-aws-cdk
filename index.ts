@@ -48,16 +48,22 @@ const mapEntry = (handlersPath: string): Configuration['entry'] => {
  * Example usage:
  *
  * Module.exports = [
- *   createConfig('build/services/cron/handlers'),
- *   createConfig('build/services/api/handlers'),
+ *   createConfig('build/services/cron/handlers', 'bundles/cron/handlers', __dirname, 'src'),
+ *   createConfig('build/services/api/handlers', 'bundles/api/handlers', __dirname, 'src'),
  * ];
  *
  * And they will be bundled into:
  *    /bundles/cron/handlers
  *    /bundles/api/handlers
+ *
+ * @param handlersPath
+ * @param outputPath
+ * @param srcDirname
+ * @param srcDirnameAlias
  */
 export const createConfig = (
   handlersPath: string,
+  outputPath: string,
   srcDirname: string,
   srcDirnameAlias: string = 'src',
 ): Configuration => ({
@@ -65,13 +71,7 @@ export const createConfig = (
   target: 'node',
   entry: mapEntry(handlersPath),
   output: {
-    path: `${process.cwd()}/${
-      handlersPath
-      // Replace '/build' with '/bundles' pathname
-        .replace(/build/i, 'bundles')
-      // Remove "/services"
-        .replace(/\/services/i, '')
-    }`,
+    path: path.join(process.cwd(), outputPath),
     // Keep the bundle name same as the orignal function name
     filename: '[name].js',
     libraryTarget: 'umd',
