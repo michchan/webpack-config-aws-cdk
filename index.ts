@@ -48,8 +48,8 @@ const mapEntry = (handlersPath: string): Configuration['entry'] => {
  * Example usage:
  *
  * Module.exports = [
- *   createConfig('build/services/cron/handlers', 'bundles/cron/handlers', __dirname, 'src'),
- *   createConfig('build/services/api/handlers', 'bundles/api/handlers', __dirname, 'src'),
+ *   createConfig('build/services/cron/handlers', 'bundles/cron/handlers', __dirname, 'build'),
+ *   createConfig('build/services/api/handlers', 'bundles/api/handlers', __dirname, 'build'),
  * ];
  *
  * And they will be bundled into:
@@ -59,13 +59,15 @@ const mapEntry = (handlersPath: string): Configuration['entry'] => {
  * @param handlersPath
  * @param outputPath
  * @param srcDirname
- * @param srcDirnameAlias
+ * @param srcAlias
  */
 export const createConfig = (
   handlersPath: string,
   outputPath: string,
   srcDirname: string,
-  srcDirnameAlias: string = 'src',
+  srcAliasOutput: string,
+  srcAlias: string = 'src',
+// eslint-disable-next-line max-params
 ): Configuration => ({
   mode: 'development',
   target: 'node',
@@ -82,7 +84,7 @@ export const createConfig = (
   },
   resolve: {
     alias: {
-      [srcDirnameAlias]: path.resolve(srcDirname, 'build'),
+      [srcAlias]: path.resolve(srcDirname, srcAliasOutput),
     },
   },
   externals: {
