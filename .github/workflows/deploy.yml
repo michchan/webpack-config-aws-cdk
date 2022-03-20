@@ -28,21 +28,23 @@ jobs:
       - name: Setup Node with the right version
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install
+      
+      # Yarn install
+      - run: yarn install --frozen-lockfile
 
       # Run Eslint
       - name: Run eslint
-        run: npm run eslint .
+        run: yarn run eslint .
 
       # Run test
       - name: Run test
-        run: npm run test
+        run: yarn run test
 
       # Run build
       - name: Run build
-        run: npm run build
+        run: yarn run build
 
       # Publish to NPM
       - run: npm publish --access public
