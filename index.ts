@@ -73,8 +73,8 @@ export const createConfig = (
   outputPath: string,
   srcDirname: string,
   srcAliasOutput: string,
-  srcAlias: string = 'src',
-// eslint-disable-next-line max-params
+  srcAlias: string = 'src'
+  // eslint-disable-next-line max-params
 ): Configuration => ({
   mode: 'development',
   target: 'node',
@@ -109,7 +109,22 @@ export const chromeAWSLambdaRules: RuleSetRule[] = [
    * from the helper 'launchPuppeteerBrowserSession' of 'simply-utils'.
    */
   {
-    test: /chrome\-aws\-lambda\/bin\/(.+)\.br$/,
-    use: [{ loader: 'file-loader', options: { name: '/node_modules/chrome-aws-lambda/bin/[name].[ext]' } }],
+    test: /chrome-aws-lambda\/bin\/(.+)\.br$/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: { name: '/node_modules/chrome-aws-lambda/bin/[name].[ext]' },
+      },
+    ],
+  },
+  // Fix webpack 5 "Unexpected token" error for *.js.map files, since chrome-aws-lambda 7.0
+  {
+    test: /chrome-aws-lambda\/build\/(.+)\.js\.map$/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: { name: '/node_modules/chrome-aws-lambda/build/[name].[ext]' },
+      },
+    ],
   },
 ]
